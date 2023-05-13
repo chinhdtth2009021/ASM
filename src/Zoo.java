@@ -38,42 +38,51 @@ public class Zoo {
     public void addtiger() {
         System.out.print("Nhập tên chuồng để thêm Tiger: ");
         Scanner scanner = new Scanner(System.in);
-
+        int timchuong=0;
         String maChuong = scanner.nextLine();
         for (Chuong c : this.chuongs) {
             if (c.getMaChuong().equals(maChuong)) {
                 Tiger tiger = new Tiger();
                 tiger.input();
+                timchuong++;
                 c.addanimal(tiger);
                 System.out.println("Đã thêm Tiger vào chuồng có mã " + maChuong);
                 break;
             }
+        }
+        if (timchuong==0){
+            System.out.println("không tìm thấy mã chuồng");
         }
     }
 
     public void addog() {
         System.out.print("Nhập tên chuồng để thêm Dog: ");
         Scanner scanner1 = new Scanner(System.in);
-
+        int timchuong=0;
         String ma = scanner1.nextLine();
         for (Chuong c : this.chuongs) {
             if (c.getMaChuong().equals(ma)) {
                 Dog dog = new Dog();
                 dog.input();
+                timchuong++;
                 c.addanimal(dog);
                 System.out.println("Đã thêm Dog vào chuồng có mã " + ma);
                 break;
             }
+        }
+        if (timchuong==0){
+            System.out.println("không tìm thấy mã chuồng");
         }
     }
 
     public void addcat() {
         System.out.print("Nhập tên chuồng để thêm Cat: ");
         Scanner scanner1 = new Scanner(System.in);
-
+        int timchuong=0;
         String ma = scanner1.nextLine();
         for (Chuong c : this.chuongs) {
             if (c.getMaChuong().equals(ma)) {
+                timchuong++;
                 Cat dog = new Cat();
                 dog.input();
                 c.addanimal(dog);
@@ -81,54 +90,120 @@ public class Zoo {
                 break;
             }
         }
+        if (timchuong==0){
+            System.out.println("không tìm thấy mã chuồng");
+        }
     }
 
+    //    public void remove() {
+//        System.out.println("Nhập mã chuồng muốn xóa : ");
+//        Scanner scanner = new Scanner(System.in);
+//        String ma = scanner.nextLine();
+//        int timchuong = 0;
+//        for (Chuong chuong : chuongs
+//        ) {
+//            if (ma.equals(chuong.getMaChuong())) {
+//                timchuong++;
+//                String loai;
+//                do {
+//                    System.out.println("Nhập vào loại vật (tiger,dog,cat)");
+//                    loai = scanner.nextLine();
+//                    if (!loai.equals("tiger") && !loai.equals("cat") && !loai.equals("dog")) {
+//                        System.out.println("Nhập loại không chính xác : ");
+//                    }
+//                } while (!loai.equals("tiger") && !loai.equals("cat") && !loai.equals("dog"));
+//                System.out.println("Nhập vào tên con vật : ");
+//                String ten = scanner.nextLine();
+//                if (loai.equals("cat")) {
+//                    for (Animal a : chuong.getAnimals()
+//                    ) {
+//                        if (a instanceof Cat && a.getTen().equals(ten)) {
+//                            chuong.delete(ten);
+//                        }
+//                    }
+//                } else if (loai.equals("tiger")) {
+//                    for (Animal a : chuong.getAnimals()
+//                    ) {
+//                        if (a instanceof Tiger && a.getTen().equals(ten)) {
+//                            chuong.delete(ten);
+//                        }
+//                    }
+//                } else if (loai.equals("dog")) {
+//                    for (Animal a : chuong.getAnimals()
+//                    ) {
+//                        if (a instanceof Dog && a.getTen().equals(ten)) {
+//                            chuong.delete(ten);
+//                        }
+//                    }
+//                }
+//                break;
+//            }
+//        }
+//        if (timchuong == 0) {
+//            System.out.println("Không thể tìm thấy chuồng : ");
+//        }
+//    }
     public void remove() {
-        System.out.println("Nhập mã chuồng muốn xóa : ");
+        System.out.println("Nhập mã chuồng muốn xóa: ");
         Scanner scanner = new Scanner(System.in);
         String ma = scanner.nextLine();
         int timchuong = 0;
-        for (Chuong chuong : chuongs
-        ) {
+        int timconvat =0;
+        for (Iterator<Chuong> iterator = chuongs.iterator(); iterator.hasNext(); ) {
+            Chuong chuong = iterator.next();
             if (ma.equals(chuong.getMaChuong())) {
                 timchuong++;
                 String loai;
                 do {
-                    System.out.println("Nhập vào loại vật (tiger,dog,cat)");
+                    System.out.println("Nhập vào loại vật (tiger, dog, cat): ");
                     loai = scanner.nextLine();
                     if (!loai.equals("tiger") && !loai.equals("cat") && !loai.equals("dog")) {
-                        System.out.println("Nhập loại không chính xác : ");
+                        System.out.println("Nhập loại không chính xác!");
                     }
                 } while (!loai.equals("tiger") && !loai.equals("cat") && !loai.equals("dog"));
-                System.out.println("Nhập vào tên con vật : ");
+
+                System.out.println("Nhập vào tên con vật: ");
                 String ten = scanner.nextLine();
+
                 if (loai.equals("cat")) {
-                    for (Animal a : chuong.getAnimals()
-                    ) {
-                        if (a instanceof Cat && a.getTen().equals(ten)) {
-                            chuong.delete(ten);
+                    Iterator<Animal> animalIterator = chuong.getAnimals().iterator();
+                    while (animalIterator.hasNext()) {
+                        Animal animal = animalIterator.next();
+                        if (animal instanceof Cat && animal.getTen().equals(ten)) {
+                            animalIterator.remove();
+                            System.out.println("Xóa thành công ");
+                            timconvat++;
                         }
                     }
                 } else if (loai.equals("tiger")) {
-                    for (Animal a : chuong.getAnimals()
-                    ) {
-                        if (a instanceof Tiger && a.getTen().equals(ten)) {
-                            chuong.delete(ten);
+                    Iterator<Animal> animalIterator = chuong.getAnimals().iterator();
+                    while (animalIterator.hasNext()) {
+                        Animal animal = animalIterator.next();
+                        if (animal instanceof Tiger && animal.getTen().equals(ten)) {
+                            animalIterator.remove();
+                            System.out.println("Xóa thành công ");
+                            timconvat++;
                         }
                     }
                 } else if (loai.equals("dog")) {
-                    for (Animal a : chuong.getAnimals()
-                    ) {
-                        if (a instanceof Dog && a.getTen().equals(ten)) {
-                            chuong.delete(ten);
+                    Iterator<Animal> animalIterator = chuong.getAnimals().iterator();
+                    while (animalIterator.hasNext()) {
+                        Animal animal = animalIterator.next();
+                        if (animal instanceof Dog && animal.getTen().equals(ten)) {
+                            animalIterator.remove();
+                            System.out.println("Xóa thành công ");
+                            timconvat++;
                         }
                     }
                 }
-                break;
+
             }
         }
         if (timchuong == 0) {
-            System.out.println("Không thể tìm thấy chuồng : ");
+            System.out.println("Không thể tìm thấy chuồng!");
+        }
+        if (timconvat ==0){
+            System.out.println("không tìm thấy con vật xóa không thành công");
         }
     }
 
